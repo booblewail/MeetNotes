@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: meetnotes-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    healthCheckPath: /health
+    dockerCommand: sh -c "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips=*"
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: REDIS_URL
+        value: memory://
+      - key: LLM_FAST_MODEL
+        value: gemini-3.5-flash-lite
+      - key: LLM_CONSOLIDATION_MODEL
+        value: gemini-4-hydrogen
+      - key: EMBEDDING_MODEL
+        value: gemini-embedding-001
+      - key: JWT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: DEEPGRAM_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false

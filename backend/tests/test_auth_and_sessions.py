@@ -114,3 +114,32 @@ async def test_session_crud_glossary_and_exports(
 
     s_del = await client.delete(f"/sessions/{session_id}", headers=headers)
     assert s_del.status_code == 204
+
+
+def test_normalize_async_database_url_for_neon_and_render() -> None:
+    from app.core.database import normalize_async_database_url
+
+    neon_url = (
+        "postgresql://neondb_owner:secret%40pass@ep-cool-rain-123.aws.neon.tech/neondb"
+        "?sslmode=require&channel_binding=require"
+    )
+    clean_neon, args_neon = normalize_async_database_url(neon_url)
+    assert (
+        clean_neon
+        == "postgresql+asyncpg://neondb_owner:secret%40pass@ep-cool-rain-123.aws.neon.tech/neondb"
+    )
+    assert args_neon == {"ssl": "require"}
+
+    render_url = "postgres://user:pass@dpg-xyz.oregon-postgres.render.com/meetnotes?sslmode=verify-full&application_name=api"
+    clean_render, args_render = normalize_async_database_url(render_url)
+    assert (
+        clean_render
+        == "postgresql+asyncpg://user:pass@dpg-xyz.oregon-postgres.render.com/meetnotes?application_name=api"
+    )
+    assert args_render == {"ssl": "require"}
+
+    sqlite_url = "sqlite+aiosqlite:///./dev.db"
+    clean_sqlite, args_sqlite = normalize_async_database_url(sqlite_url)
+    assert clean_sqlite == sqlite_url
+    assert args_sqlite == {"check_same_thread": False}
+
