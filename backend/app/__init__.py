@@ -1,0 +1,1 @@
+"""MeetNotes backend application package."""

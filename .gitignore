@@ -1,0 +1,38 @@
+# Environments & secrets
+.env
+.env.local
+.env.*.local
+.env.prod
+.env.*.prod
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+dist/
+build/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/public/audio/ort-*
+frontend/public/audio/silero_vad*
+frontend/public/audio/vad.worklet*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Ephemeral local audio spools / test DBs
+/tmp/
+*.db
+*.sqlite
+*.sqlite3
+backup-*.sql.gz

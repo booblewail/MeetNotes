@@ -1,0 +1,9 @@
+{
+  "name": "MeetNotes",
+  "short_name": "MeetNotes",
+  "description": "Real-time AI meeting intelligence workspace",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1120",
+  "theme_color": "#2563eb"
+}
